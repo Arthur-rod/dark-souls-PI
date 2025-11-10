@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+# A linha abaixo determina que o diretório node_modules não será enviado ao repositório remoto
+node_modules
+package-lock.json
+
+.github
+=======
+web-data-viz/
+>>>>>>> 8ce7921c733da2d980829edc1f58aa5bb6b40b6c

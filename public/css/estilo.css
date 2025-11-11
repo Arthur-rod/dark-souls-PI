@@ -47,7 +47,7 @@ body {
   position: fixed;
   width: 100%;
   background-color: #000000b0;
-  box-shadow: 0px 21px 32px 12px #000000b0);
+  box-shadow: 0px 21px 32px 12px #000000b0;
 -webkit-box-shadow: 0px 21px 32px 12px #000000b0;
 -moz-box-shadow: 0px 21px 32px 12px #000000b0;
 }
@@ -61,7 +61,7 @@ body {
 .header a {
   text-decoration: none;
   font-size: 1.3vw;
-  color: #ffe6ac;
+  color: #df8b02;
   font-weight: 700;
 
 }
@@ -76,7 +76,7 @@ body {
   align-items: center;
   justify-content: space-between;
   list-style: none;
-  color: #e3b062;
+  color: #df8b02;
 }
 
 .header .container img{
@@ -90,7 +90,7 @@ body {
   color: white;
 }
 .bGImageFilter{
-  position: absolute;
+  position: fixed;
   z-index: -999;
   height: 100%;
   width: 100%;
@@ -98,7 +98,7 @@ body {
 }
 
 .bGImage{
-  position: absolute;
+  position: fixed;
   z-index: -1000;
   height: 100%;
   width: 100%;
@@ -115,7 +115,7 @@ body {
 
 .banner .container .titulo{
   position: absolute;
-  color: #fcdf9b;
+  color: #df8b02;
   width: fit-content;
   font-weight: 800;
   font-size: 7vh;
@@ -143,8 +143,13 @@ body {
 /* MISSÃO VISÃO VALORES */
 
 .social {
-  background-color: #e5e5e5;
+  background-color: #000000d0;
+  -webkit-box-shadow: 0px 0px 38px 34px #000000d0; 
+box-shadow: 0px 0px 38px 34px #000000d0;
   display: flex;
+  width: 70%;
+  height: fit-content;
+  margin-left: 10%;
 }
 
 .social .container {

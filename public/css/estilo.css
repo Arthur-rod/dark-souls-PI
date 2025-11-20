@@ -30,7 +30,7 @@ body {
 }
 
 :root {
-  --tamanho-header: 80px;
+  --tamanho-header: 45px;
   --tamanho-banner: calc(100vh - var(--tamanho-footer) - 2px);
   --tamanho-simulador: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
   --tamanho-login: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
@@ -53,7 +53,7 @@ h2{
 
 h4{
   color: #df8b02;
-  font-size: larger;
+  font-size: 30px;
 }
 
 .container {
@@ -67,7 +67,6 @@ h4{
 
 .header {
   height: 45px;
-  border-bottom: 2px ;
   position: fixed;
   width: 100%;
   background-color: #0000007a;
@@ -165,7 +164,7 @@ h4{
   color: #df8b02;
   width: fit-content;
   font-weight: 800;
-  font-size: 7vh;
+  font-size: 7vw;
   left: 8vw;
   top: 64vh;
   z-index: 1;
@@ -175,13 +174,13 @@ h4{
   width: fit-content;
   margin: 0;
   padding: 0;
-  font-size: 5vh;
+  font-size: 5vw;
   position: absolute;
   top: 76vh;
   text-shadow: 4px -3px 7px rgba(0,0,0,1);
 }
 .banner .container span{
-  font-size: 3vh;
+  font-size: 3vw;
 }
 
 /* CAIXAS DE TEXTO */
@@ -205,8 +204,12 @@ section{
 }
 
 .box img {
-  width: 270px;
-  transform: translateX(-90px);
+  height: 450px;
+  transform: translateX(-60px);
+}
+
+.box #imgGwyn{
+  height: 600px;
 }
 
 .box {
@@ -214,6 +217,17 @@ section{
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
+}
+
+.boxPersonagens{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boxPersonagens img {
+  width: 80%;
 }
 
 .innerBox{
@@ -225,6 +239,7 @@ section{
   background-color: #000000b6;
   backdrop-filter: blur(2px);
   padding: 0 4%;
+  font-size: 20px;
 }
 
 .innerBox h4{
@@ -233,7 +248,7 @@ section{
 
 .innerBox p{
   padding: 2%;
-  text-align: justify;
+  text-align:start;
 }
 
 .social .container .boxes {
@@ -243,12 +258,11 @@ section{
   padding: 30px 0;
 }
 
-
 /* FOOTER */
 
 .footer {
   background-color: #000000d8;
-  height: 150px;
+  height: fit-content;
   color: #fff;
   display: flex;
   font-size: 15px;
@@ -428,10 +442,6 @@ input {
   height: 50px;
   width: 50px;
 }
-
-/* SIMULADOR */
-
-
 
 /* ALERTA */
 

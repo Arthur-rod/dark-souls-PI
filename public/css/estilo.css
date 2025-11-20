@@ -25,7 +25,7 @@ min-height: 100vh ;
 body {
   margin: 0;
   padding: 0;
-  font-family: "Inconsolata", sans-serif;
+  font-family: "Inconsolata";
   background-color: black;
 }
 
@@ -51,9 +51,21 @@ h2{
   text-align: center;
 }
 
+h3{
+  color: #df8b02;
+  font-family: "OptimusPrinceps";
+  font-weight: 200;
+  font-size: 35px;
+  text-align: center;
+}
+
 h4{
   color: #df8b02;
   font-size: 30px;
+}
+
+p{
+  font-weight: 300;
 }
 
 .container {
@@ -100,6 +112,32 @@ h4{
 .header a:hover{
   transition: 450ms;
   color: #df8b02;
+}
+
+.button-login {
+    color: rgb(255, 255, 255);
+    border-radius: 2px;
+    border: none;
+    padding: .5vw .9vw;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: "OptimusPrinceps";
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-size: 20px;
+    background-color: #0000005d;
+  -webkit-box-shadow: 0px 0px 19px 6px #00000069; 
+box-shadow: 0px 0px 19px 6px #00000069;
+}
+
+.button-login:hover {
+    background-color: #000000b8;
+    border: solid 1px;
+    font-family: "Inconsolata";
+    border-color: #df8b02;
+    color: #df8b02;
+    scale: 1.05;
+    font-weight: 700;
 }
 
 .agora a{
@@ -186,8 +224,13 @@ h4{
 /* CAIXAS DE TEXTO */
 
 section{
-  background-color: rgba(0, 0, 0, 0.813);
-  width: 100%;
+  width: 90%;
+  margin: 0 auto 150px auto;
+  backdrop-filter: blur(2px);
+  background-color: #000000da;
+  -webkit-box-shadow: 0px 0px 29px 20px #000000df; 
+box-shadow: 0px 0px 29px 20px #000000df;
+
 }
 
 .social {
@@ -197,6 +240,7 @@ section{
   height: fit-content;
   justify-self: center;
   color: #e5e5e5;
+  padding-bottom: 200px;
 }
 
 .social .container {
@@ -219,15 +263,18 @@ section{
   align-items: center;
 }
 
-.boxPersonagens{
+.boxContos{
   margin-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.boxPersonagens img {
+.boxContos img {
   width: 80%;
+  background-color: #000000aa;
+  -webkit-box-shadow: 0px 0px 29px 20px #000000b6; 
+box-shadow: 0px 0px 29px 20px #000000b6;
 }
 
 .innerBox{
@@ -261,12 +308,18 @@ section{
 /* FOOTER */
 
 .footer {
-  background-color: #000000d8;
+  background-color: #000000bf;
   height: fit-content;
   color: #fff;
   display: flex;
   font-size: 15px;
   backdrop-filter: blur(2px);
+  -webkit-box-shadow: 0px 0px 29px 20px #000000b6; 
+box-shadow: 0px 0px 29px 20px #000000b6;
+}
+
+.container h4{
+  font-size: 18px
 }
 
 .footer .container {
@@ -278,15 +331,60 @@ section{
   font-size: 12px;
 }
 
+/* BELEZAS */
+
+.setorBelezas{
+  width: 90vw;
+  display: flex;
+  flex-wrap: wrap ;
+  justify-self: center;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  padding: 100px 0;
+  background-color: #000000aa;
+  -webkit-box-shadow: 0px 0px 29px 20px #000000b6; 
+box-shadow: 0px 0px 29px 20px #000000b6;
+}
+
+.setorBelezas img{
+  max-width: 75%;
+  margin: 0 auto;
+  -webkit-box-shadow: 0px 0px 29px 20px #000000b6; 
+box-shadow: 0px 0px 29px 20px #000000b6;
+}
+
+.setorBelezas .beleza{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.beleza p{
+  color: #fff;
+  font-size: 20px;
+  width: 65%;
+  margin: 30px auto 150px auto;
+  text-align: center;
+}
+
 /* LOGIN */
 
 .login {
-  height: var(--tamanho-login);
-  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
-  background-size: cover;
+  height: 100vh;
 }
 
-.login .container {
+.containerLoginCad {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 100vh;
+  margin: auto;
+}
+
+.login .containerLoginCad {
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -294,18 +392,21 @@ section{
 
 .card {
   width: 50%;
-  background-color: #e5e5e5;
-  border-radius: 10px;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  color: palevioletred;
+  color:  white;
   flex-direction: column;
   height: fit-content;
   padding: 20px 0;
+  background-color: #000000cc;
+  -webkit-box-shadow: 0px 0px 29px 20px #000000d6; 
+box-shadow: 0px 0px 29px 20px #000000d6;
 }
 
 .card h2 {
+  font-family: "Inconsolata";
   margin: 0;
   font-size: 30px;
 }
@@ -324,19 +425,17 @@ section{
 }
 
 .formulario input {
-  border: 2px solid #32b9cd;
+  border: 2px solid #ff9900;
   text-align: center;
-  border-radius: 10px;
   margin: 0;
 }
 
 .formulario select {
-  border: 2px solid #32b9cd;
+  border: 2px solid #ff9900;
   background-color: white;
-  color: gray;
+  color: rgb(255, 255, 255);
   height: 36px;
   text-align: center;
-  border-radius: 10px;
   margin: 0;
 }
 
@@ -349,13 +448,13 @@ section{
 
 .botao {
   cursor: pointer;
-  font-family: "Barlow", sans-serif;
+  font-family: "Inconsolata", sans-serif;
   border: 0;
   border-radius: 5px;
   font-weight: 600;
   font-size: 18px;
   color: #fff;
-  background-color: #ED145B;
+  background-color: #00000087;
   width: 120px;
   height: 30px;
   align-self: center;
@@ -390,7 +489,7 @@ section{
   width: 230px;
   position: fixed;
   border-radius: 4px;
-  border: #ED145B 3px solid;
+  border: #ff9900 3px solid;
   padding: 10px;
   margin-right: 10%;
 }
@@ -412,7 +511,8 @@ section{
 
 input {
   margin-bottom: 10px;
-  border: 2px solid #32b9cd;
+  border: 2px solid #ff9900;
+  background-color: rgba(0, 0, 0, 0.741);
   padding: 10px;
   text-align: center;
   border-radius: 10px;
@@ -426,7 +526,7 @@ input {
   font-size: 18px;
   padding: 10px 15px;
   color: white;
-  background-color: #ED145B;
+  background-color: #ff9900;
   width: 120px;
   align-self: center;
   margin-top: 5px;

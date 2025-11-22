@@ -86,7 +86,7 @@
 
     window.onload = exibirAquariosDoUsuario();
 
-    function exibirAquariosDoUsuario() {
+    function exibirGraficosUsuario() {
         var aquarios = JSON.parse(sessionStorage.AQUARIOS);
         aquarios.forEach(item => {
             document.getElementById("btnAquario").innerHTML += `

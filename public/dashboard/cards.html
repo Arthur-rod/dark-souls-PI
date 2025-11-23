@@ -2,119 +2,155 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Tempo Real</title>
+    <title>Visão geral</title>
 
 
     <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
-
+    <link rel="icon" href="../assets/icon/favicon2.png" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/sessao.js"></script>
-    <script src="../js/alerta.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 </head>
+ 
+<body class="dash_body" exibirGraficos(), onload="validarSessao()">
+  <div class="asideBgFilter"></div>
+  <aside>
+    <a href="../index.html"><img width="250px" src="../assets/imgs/logoDs.png" alt=""></a>
+    <li>
+      <ul style="background-color: #0000007e; color: #ff9900;"><a class="aside_buttons" href=""><p>Graficos Gerais</p></a></ul>
+      <ul><a class="aside_buttons" href="../quiz.html"><p>Quiz</p></a></ul>
+      <ul><a class="aside_buttons" href="../index.html"><p>Voltar para Tela inicial</p></a></ul>
+      <ul class="bt_vermelho"> <a class="aside_buttons" onclick="limparSessao()" href="../login.html"><p>Sair da conta</p></a></ul>
+    </li>
 
-<body onload="validarSessao(), exibirAquarios(),  atualizacaoPeriodica()">
-
-    <div class="janela">
-
-        <div class="header-left dash-header">
-
-            <h1>AquaTech</h1>
-
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
-
-            <div class="btn-nav">
-                <h3>Aquários</h3>
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./dashboard.html">
-                    <h3>Gráficos</h3>
-                </a>
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
-                </a>
-            </div>
-
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
-
-        </div>
-
-        <div class="dash">
-            <div id="alerta">
-            </div>
-            <div class="area-parametros-alerta">
-                <p class="titulo-legenda">
-                    Legenda - Parâmetros para Alertas
-                </p>
-                <div class="parametros-alerta">
-                    <div class="item-regua perigo-frio">
-                        <p>Perigo</p>
-                        <p>&lt;=5°C</p>
-                    </div>
-                    <div class="item-regua alerta-frio">
-                        <p>Alerta</p>
-                        <p>&lt;=10°C</p>
-                    </div>
-                    <div class="item-regua ideal">
-                        <p>Ideal</p>
-                        <p>20°C</p>
-                    </div>
-                    <div class="item-regua alerta-quente">
-                        <p>Alerta</p>
-                        <p>&gt;=22°C</p>
-                    </div>
-                    <div class="item-regua perigo-quente">
-                        <p>Perigo</p>
-                        <p>&gt;=23°C</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cards" id="cardAquarios">
-
-            </div>
-
-        </div>
-
+  </aside>
+  <main>
+    <h1 class="titulo_dash">Aproveite seu tempo, <span id="b_usuario"></span>! </h1>
+    
+    <div class="cardsD">
+      <div class="cardD">
+        <h2><span id="campeaoUsuario"></span></h2>
+        <p>Campeão escolhido</p>
+      </div>
+      <div class="cardD">
+        <h2><span id="campeaoGeral"></span></h2>
+        <p>Campeão mais escolhido dentre os usuários </p>
+      </div>
     </div>
-
+    
+    <div class="charts">
+        
+        <div class="chart">
+            <canvas id="graficoPizza"></canvas>
+        </div>
+    </div>
+        
+  </main>
 </body>
-
+</html>
 <script>
 
-    function exibirAquarios() {
-        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
-                            <h1>${item.descricao}</h1>
-                        </div>
-                        <div class="desc-aquario">
-                        <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
-                        </div>
-                        <div class="cor-alerta" id="card_${item.id}"></div>
-                    </div>
-                    </div>
-                    `
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    campeaoUsuario.innerHTML = sessionStorage.CAMPEAO_USUARIO;
+    
+    window.onload = obterDadosGrafico();
+    
+    // O gráfico é construído com três funções:
+    // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
+    // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
+    // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do Banco
+    
+    // Esta função *obterDadosGrafico* busca os últimos dados inseridos em tabela de medidas.
+    // para, quando carregar o gráfico da primeira vez, já trazer com vários dados.
+    // A função *obterDadosGrafico* também invoca a função *plotarGrafico*
+    
+    //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
+    //     Para ajustar o "select", ajuste o comando sql em src/models
+    
+    function obterDadosGrafico() {
+        
+        fetch(`/campeaoFav/mostrarDadosGerais`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+                    
+                    plotarGrafico(resposta);
+                    
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
         });
     }
+    
+    function plotarGrafico(resposta) {
+        console.log('iniciando plotagem do gráfico de pizza...');
+        
+        let campeaoMaisEscolha = resposta[3].campeaoFav;
+        let labels = [];
+        let qtdEscolhaChamp = [];
+        let cores = ['#0025fa','#fa0000', '#fa8500', '#6000fa', '#00fa85', '#fa00c4'];
+        
+        campeaoGeral.innerHTML = campeaoMaisEscolha;
+        
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            labels.push(registro.campeaoFav);
+            qtdEscolhaChamp.push(registro.Soma);
+        }
+        
+        let dados = {
+            labels: labels,
+            datasets: [{
+                data: qtdEscolhaChamp,
+                backgroundColor: cores.slice(0, labels.length),
+                borderColor: '#fff',
+                borderWidth: 0
+            }]
+        };
+        
+        console.log('----------------------------------------------')
+        console.log('O gráfico de PIZZA será plotado com os respectivos valores:')
+        console.log('Labels (Campeões):', labels)
+        console.log('Dados (Votos):', qtdEscolhaChamp)
+        console.log('----------------------------------------------')
+        
+        const config = {
+            type: 'pie',
+            data: dados,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels:{color: 'white',
+                                font:{size:16, family: "Inconsolata"}
+                               }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Os favoritos das cinzas',
+                        color: 'orange', 
+                        font:{size: 30, family: "OptimusPrinceps"}
+                    }
+                }
+            }
+        };
+
+    let myChart = new Chart(
+        document.getElementById(`graficoPizza`),
+        config
+    );
+}
 
 </script>
-
-</html>

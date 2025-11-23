@@ -191,3 +191,189 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+/* --- Estilização do Quiz --- */
+
+#pontuacaoEJogo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+#btnIniciarQuiz {
+    padding: 15px 30px;
+    position: absolute;
+    justify-self: center;
+    align-self: center;
+    margin: auto;
+    font-size: 60px;
+    font-family: "OptimusPrincepsSemi";
+    color: rgb(255, 255, 255);
+    font-weight: 800;
+    border: none;
+    background-color: rgba(0, 0, 0, 0) !important;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+
+#btnIniciarQuiz:hover {
+    background-color: #e68a00;
+    transform: scale(1.05);
+}
+
+#pontuacao, #jogo {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    border: 2px solid #ff9900;
+    color: #f1f3e8;
+    font-family: "Inconsolata";
+    margin-bottom: 20px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.flex-colunar {
+    display: flex;
+    flex-direction: column;
+}
+
+.padding-8 {
+    padding: 8px 20px;
+}
+
+/* Estilização da Pontuação */
+
+#pontuacao {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+#pontuacaoDuranteJogo span, #pontuacaoFinalJogo span {
+    margin: 5px 0;
+}
+
+#pontuacaoFinal, #msgFinal {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Estilização do Jogo/Questão */
+
+#infoQuestao {
+    border-bottom: 1px solid #ff990050;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#perguntaDaQuestaoAtual {
+    font-size: 22px;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #ff9900;
+}
+
+#infoAlternativas {
+    font-style: italic;
+    color: #f1f3e8b0;
+    border-top: 1px solid #ff990050;
+    padding-top: 10px;
+}
+
+#opcoes {
+    gap: 10px;
+    font-size: 18px;
+}
+
+/* Custom Radio Button Styling */
+.radio {
+    display: none;
+}
+
+.option {
+    display: block;
+    padding: 12px;
+    border: 1px solid #ff9900;
+    cursor: pointer;
+    transition: 200ms;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.option:hover {
+    background-color: rgba(255, 153, 0, 0.1);
+}
+
+/* O fundo do label muda quando o radio está checado */
+input[type="radio"]:checked + .option {
+    background-color: #ff9900;
+    color: black;
+    font-weight: bold;
+}
+
+/* Estilização dos Botões de Ação */
+
+#botoes {
+    padding-top: 20px;
+    gap: 15px;
+}
+
+#botoes button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: 200ms;
+    font-family: "Inconsolata";
+    font-weight: bold;
+}
+
+#btnSubmeter, #btnProx {
+    background-color: #ff9900;
+    color: black;
+}
+
+/* Hover simplificado */
+#btnSubmeter:hover, #btnProx:hover {
+    background-color: #e68a00;
+}
+
+#btnTentarNovamente {
+    background-color: #fa0000;
+    color: white;
+}
+
+#btnTentarNovamente:hover {
+    background-color: #cc0000;
+}
+
+/* Mantendo a regra para botões desativados (disabled) */
+#botoes button:disabled {
+    background-color: #555555;
+    color: #aaaaaa;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.text-success-with-bg {
+    background-color: #4CAF50 !important;
+    color: white;
+}
+
+.text-warning-with-bg {
+    background-color: #ff9900 !important;
+    color: black;
+}
+
+.text-danger-with-bg {
+    background-color: #fa0000 !important;
+    color: white;
+}
+
+#jogo.text-new-gray {
+    opacity: 0.7;
+}

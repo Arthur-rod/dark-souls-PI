@@ -4,126 +4,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemplo - Quiz</title>
+    <link rel="icon" href="../assets/icon/favicon2.png">
+    <script src="../js/sessao.js"></script>
+    <title>Quiz</title>
     <link rel="stylesheet" href="./css/dashboards.css">
 </head>
 
-
-<body onload="onloadEsconder()">
-    <body class="dash_body" exibirGraficos(), onload="validarSessao()">
+<body class="dash_body" onload="onloadEsconder(), validarSessao(), melhorResultado()">
   <div class="asideBgFilter"></div>
   <aside>
     <a href="../index.html"><img width="250px" src="../assets/imgs/logoDs.png" alt=""></a>
     <li>
-      <ul style="background-color: #0000007e; color: #ff9900;"><a class="aside_buttons" href=""><p>Graficos Gerais</p></a></ul>
-      <ul><a class="aside_buttons" href="../quiz.html"><p>Quiz</p></a></ul>
+      <ul><a class="aside_buttons" href="./dashboard/cards.html"><p>Graficos Gerais</p></a></ul>
+      <ul style="background-color: #0000007e; color: #ff9900;"><a class="aside_buttons" href="../quiz.html"><p>Quiz</p></a></ul>
       <ul><a class="aside_buttons" href="../index.html"><p>Voltar para Tela inicial</p></a></ul>
       <ul class="bt_vermelho"> <a class="aside_buttons" onclick="limparSessao()" href="../login.html"><p>Sair da conta</p></a></ul>
     </li>
 
   </aside>
-    <div id="pontuacaoEJogo">
-        <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+  <main>
+        <h1 class="titulo_dash">Teste seu conhecimento, <span id="b_usuario"></span>. E honre aqueles que adoram <span id="campeaoUsuario"></span> !</h1>
 
-        <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
-            <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
-                <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
-                <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
+<div class="cardsD">
+          <div class="cardD">
+              <h2><span id="melhorPontuacaoQuiz">--</span></h2>
+              <p>Sua Melhor Pontuação</p>
+          </div>
+      </div>
+      <div id="pontuacaoEJogo">
+          <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+          
+          <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
+              <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
+                  <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
+                  <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
+                </div>
+                <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
+                    <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
+                        <span id="spanPontuacaoFinal">***</span>
+                    </span>
+                    <span id="msgFinal" class="width-fit-content">***</span>
+                </div>
             </div>
-            <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
-                <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
-                    <span id="spanPontuacaoFinal">***</span>
-                </span>
-                <span id="msgFinal" class="width-fit-content">***</span>
-            </div>
-        </div>
-
-        <div id="jogo" class="width-fit-content flex-colunar border-secondary">
-
-            <div id="infoQuestao" class="padding-8">
-                <span>Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span id="qtdQuestoes"></span>
+            
+            <div id="jogo" class="width-fit-content flex-colunar border-secondary">
+                
+                <div id="infoQuestao" class="padding-8">
+                    <span>Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span id="qtdQuestoes"></span>
                     questões.</span>
+                </div>
+                
+                <div id="perguntaDaQuestaoAtual" class="padding-8">
+                    <span id="spanQuestaoExibida" class="text-bold"></span>
+                </div>
+                
+                <div id="infoAlternativas" class="padding-8">
+                    <span><em>Escolha uma opção dentre as abaixo:</em></span>
+                </div>
+                
+                <div id="opcoes" class="flex-colunar padding-8">
+                    <span>
+                        <input type="radio" id="primeiraOpcao" name="option" class="radio" value="alternativaA" />
+                        <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
+                    </span>
+                    <span>
+                        <input type="radio" id="segundaOpcao" name="option" class="radio" value="alternativaB" />
+                        <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
+                    </span>
+                    <span>
+                        <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
+                        <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
+                    </span>
+                    <span>
+                        <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
+                        <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
+                    </span>
+                </div>
+                
+                <div id="botoes" class="flex-colunar padding-8">
+                    <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
+                    <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
+                    <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>Tentar novamente</button>
+                </div>
+                
             </div>
-
-            <div id="perguntaDaQuestaoAtual" class="padding-8">
-                <span id="spanQuestaoExibida" class="text-bold"></span>
-            </div>
-
-            <div id="infoAlternativas" class="padding-8">
-                <span><em>Escolha uma opção dentre as abaixo:</em></span>
-            </div>
-
-            <div id="opcoes" class="flex-colunar padding-8">
-                <span>
-                    <input type="radio" id="primeiraOpcao" name="option" class="radio" value="alternativaA" />
-                    <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
-                </span>
-                <span>
-                    <input type="radio" id="segundaOpcao" name="option" class="radio" value="alternativaB" />
-                    <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
-                </span>
-                <span>
-                    <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
-                    <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
-                </span>
-                <span>
-                    <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
-                    <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
-                </span>
-            </div>
-
-            <div id="botoes" class="flex-colunar padding-8">
-                <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
-                <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
-                <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
-                <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>Tentar novamente</button>
-            </div>
-
         </div>
-    </div>
+  </main>
 </body>
 
 </html>
 <script>
+    var b_usuario = document.getElementById("b_usuario");
+    var campeaoSession = sessionStorage.CAMPEAO_USUARIO;
     const listaDeQuestoes = [
 
         {
-            pergunta: "Qual mês tem 30 dias?",
-            alternativaA: "Janeiro",
-            alternativaB: "Dezembro",
-            alternativaC: "Junho",
-            alternativaD: "Agosto",
+            pergunta: "Qual dos nomes não representa um filho de Gwyn?",
+            alternativaA: "Solaire",
+            alternativaB: "Gwynevere",
+            alternativaC: "Filianore",
+            alternativaD: "Yorshka",
+            alternativaCorreta: "alternativaA"
+        },
+
+        {
+            pergunta: "Quem é o Ferreiro que trabalha em Firelink Shrine em DS3?",
+            alternativaA: "Vamos",
+            alternativaB: "Andre de Astora",
+            alternativaC: "Gigante Ferreiro",
+            alternativaD: "Rickert de Vinheim",
+            alternativaCorreta: "alternativaB"
+        },
+
+        {
+            pergunta: "Qual reino é a terra natal do NPC Solaire?",
+            alternativaA: "Astora",
+            alternativaB: "Vinheim",
+            alternativaC: "Catarina",
+            alternativaD: "Carim",
+            alternativaCorreta: "alternativaA"
+        },
+        {
+            pergunta: "Qual é a moeda principal usada para aumentar o nível e comprar itens?",
+            alternativaA: "Moedas de Ouro",
+            alternativaB: "Almas",
+            alternativaC: "Ember",
+            alternativaD: "Fragmentos de Estus",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Em Dark Souls 2, qual é o nome do reino decadente que você explora?",
+            alternativaA: "Lothric",
+            alternativaB: "Lordran",
+            alternativaC: "Drangleic",
+            alternativaD: "Yharnam",
             alternativaCorreta: "alternativaC"
         },
-
         {
-            pergunta: "Quantas horas tem em um dia?",
-            alternativaA: "30 horas",
-            alternativaB: "38 horas",
-            alternativaC: "48 horas",
-            alternativaD: "24 horas",
-            alternativaCorreta: "alternativaD"
-        },
-
-        {
-            pergunta: "Qual destes números é ímpar?",
-            alternativaA: "Dez",
-            alternativaB: "Doze",
-            alternativaC: "Oito",
-            alternativaD: "Onze",
-            alternativaCorreta: "alternativaD"
+            pergunta: "Em DS3, qual dos Lordes das Cinzas é uma figura que consome almas?",
+            alternativaA: "Yhorm, o Gigante",
+            alternativaB: "Guardiões do Abismo",
+            alternativaC: "Aldrich, Devorador de Deuses",
+            alternativaD: "Lorian e Lothric",
+            alternativaCorreta: "alternativaC"
         }
-
     ]
-
-    // variáveis globais    
+ 
     let numeroDaQuestaoAtual = 0
     let pontuacaoFinal = 0
     let tentativaIncorreta = 0
     let certas = 0
     let erradas = 0
     let quantidadeDeQuestoes = listaDeQuestoes.length
-    // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
 
     function onloadEsconder() {
         document.getElementById('pontuacao').style.display = "none"
@@ -141,17 +173,16 @@
 
         btnSubmeter.disabled = false
         btnProx.disabled = true
-        // btnConcluir.disabled = true
         btnTentarNovamente.disabled = true
     }
 
     function preencherHTMLcomQuestaoAtual(index) {
         habilitarAlternativas(true)
-        const questaoAtual = listaDeQuestoes[index]
+        let questaoAtual = listaDeQuestoes[index]
         numeroDaQuestaoAtual = index
         console.log("questaoAtual")
         console.log(questaoAtual)
-        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1
         document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
         document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
         document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
@@ -160,7 +191,7 @@
     }
 
     function submeter() {
-        const options = document.getElementsByName("option"); // recupera alternativas no html
+        let options = document.getElementsByName("option");
 
         let hasChecked = false
         for (let i = 0; i < options.length; i++) {
@@ -210,48 +241,47 @@
     }
 
     function tentarNovamente() {
-        // atualiza a página
         window.location.reload()
     }
 
     function checarResposta() {
-        const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual] // questão atual 
-        const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+        let questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual]
+        let respostaQuestaoAtual = questaoAtual.alternativaCorreta
 
-        const options = document.getElementsByName("option"); // recupera alternativas no html
+        let options = document.getElementsByName("option");
 
-        let alternativaCorreta = null // variável para armazenar a alternativa correta
+        let idAlternativaCorreta = null
+        let isRespostaCerta = false
 
         options.forEach((option) => {
             if (option.value === respostaQuestaoAtual) {
-                console.log("alternativaCorreta está no componente: " + alternativaCorreta)
-                alternativaCorreta = option.labels[0].id
+                idAlternativaCorreta = option.labels[0].id
             }
         })
-
-        // verifica se resposta assinalada é correta
+        
         options.forEach((option) => {
             if (option.checked === true && option.value === respostaQuestaoAtual) {
-                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
                 pontuacaoFinal++
                 certas++
-                document.getElementById("spanCertas").innerHTML = certas
-                numeroDaQuestaoAtual++
+                isRespostaCerta = true
             } else if (option.checked && option.value !== respostaQuestaoAtual) {
-                const wrongLabelId = option.labels[0].id
-
+                let wrongLabelId = option.labels[0].id
                 document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
-                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
-                tentativaIncorreta++
                 erradas++
-                document.getElementById("spanErradas").innerHTML = erradas
-                numeroDaQuestaoAtual++
             }
         })
+
+        if (!isRespostaCerta) {
+            document.getElementById(idAlternativaCorreta).classList.add("text-success-with-bg")
+        }
+
+        document.getElementById("spanCertas").innerHTML = certas
+        document.getElementById("spanErradas").innerHTML = erradas
+        numeroDaQuestaoAtual++
     }
 
     function limparCoresBackgroundOpcoes() {
-        const options = document.getElementsByName("option");
+        let options = document.getElementsByName("option");
         options.forEach((option) => {
             document.getElementById(option.labels[0].id).classList.remove("text-danger-with-bg")
             document.getElementById(option.labels[0].id).classList.remove("text-success-with-bg")
@@ -259,7 +289,7 @@
     }
 
     function desmarcarRadioButtons() {
-        const options = document.getElementsByName("option");
+        let options = document.getElementsByName("option");
         for (let i = 0; i < options.length; i++) {
             options[i].checked = false;
         }
@@ -268,7 +298,30 @@
     function finalizarJogo() {
         let textoParaMensagemFinal = null
         let classComCoresParaMensagemFinal = null
-        const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
+        let porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
+        let idUsuario = sessionStorage.ID_USUARIO;
+        const idQuiz = 1;
+
+        fetch("/quiz/salvarPontuacao", {
+           method: "POST",
+           headers: {
+               "Content-Type": "application/json"
+           },
+           body: JSON.stringify({
+               idUsuario: idUsuario,
+               idQuiz: idQuiz,
+               pontuacaoFinal: pontuacaoFinal
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                console.log("Pontuação salva com sucesso!");
+            } else {
+                console.error("Falha ao salvar a pontuação.");
+                resposta.text().then(text => console.error(text));
+            }
+        }).catch(function (erro) {
+        console.error(`Erro ao tentar salvar a pontuação: ${erro}`);
+        });
 
         if (porcentagemFinalDeAcertos <= 0.3) {
             textoParaMensagemFinal = "Parece que você não estudou..."
@@ -294,8 +347,40 @@
 
         btnProx.disabled = true
         btnSubmeter.disabled = true
-        // btnConcluir.disabled = true
         btnTentarNovamente.disabled = false
 
+    }
+
+    function melhorResultado() { 
+
+        let idUsuario = sessionStorage.ID_USUARIO;
+        let idQuiz = 1;
+
+        if (idUsuario) {
+
+            fetch(`/quiz/melhorResultado/${idUsuario}/${idQuiz}`, { cache: 'no-store' })
+                .then(response => {
+                    if (response.ok) {
+                        response.json().then(resposta => {
+
+                            if (resposta.melhor_pontuacao !== undefined && resposta.melhor_pontuacao !== null) {
+                                melhorPontuacaoQuiz.innerHTML = resposta.melhor_pontuacao;
+                            } else {
+                                melhorPontuacaoQuiz.innerHTML = '0';
+                            }
+                        });
+                    } else if (response.status === 404) {
+                        melhorPontuacaoQuiz.innerHTML = '0';
+                    } else {
+                        console.error(`Erro ao obter o melhor resultado.`);
+                    }
+                })
+                .catch(error => {
+                    console.error(`Erro ao obter o melhor resultado. ${error.message}`);
+                    melhorPontuacaoQuiz.innerHTML = 'Erro';
+                });
+        } else {
+            melhorPontuacaoQuiz.innerHTML = 'N/A';
+        }
     }
 </script>

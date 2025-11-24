@@ -47,7 +47,7 @@
         </ul>
       </div>
     </div>
-  <!--header fim-->
+
   <div class="bGImageFilter"></div>
   <div class="bGImage"></div>
   <div class="login">
@@ -56,10 +56,6 @@
         <h2>Que tal criar sua conta?</h2>
         <br><br>
         <div class="formulario">
-          <!--
-                         Para inserir mais um campo, copie uma das inputs abaixo.
-                         Assim que inserir vá para o script abaixo.
-                     -->
           <div class="campo">
             <span>Tem um personagem favorito?</span>
             <select id="champ_select"/>
@@ -72,20 +68,28 @@
           </div>
           <div class="campo">
             <span>Nome:</span>
-            <input id="nome_input" type="text" placeholder="Seu nome" />
+            <input id="nome_input" type="text" placeholder="Seu nome">
           </div>
           <div class="campo">
             <span>E-mail:</span>
-            <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
+            <input id="email_input" type="text" placeholder="meuemail@provedor.com" onclick="validarEmail()">
           </div>
+          <span id="span_email"></span>
           <div class="campo">
             <span>Senha:</span>
-            <input id="senha_input" type="password" placeholder="******" />
+            <input id="senha_input" type="password" placeholder="******" oninput="validarSenha()">
           </div>
+          <p>
+              <span id="span_tamanho">Deve conter mais de 8 caractéres</span> <br>
+              <span id="span_num">Utilize números</span> <br>
+              <span id="span_caracEsp">Utilize caractéres especiais: <br>
+              <span id="span_caracESP" style="color: gray; font-size: 12px;">Ex: ! % * . & # $</span>
+          </p>
           <div class="campo">
             <span>Confirmação da Senha:</span>
-            <input id="confirmacao_senha_input" type="password" placeholder="******" />
+            <input id="confirmacao_senha_input" type="password" placeholder="******" oninput="confirmarSenha()">
           </div>
+          <span id="span_senhaConfirm"></span>
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
         <div id="div_aguardar" class="loading-div">
@@ -103,73 +107,151 @@
 
 <script>
 
-  function cadastrar() {
-    // aguardar();
+    var emailValido = false;
+    var senhaValida = false;
+    var veriSenhaConfirmacao = false;
 
-    //Recupere o valor da nova input pelo nome do id
-    // Agora vá para o método fetch logo abaixo
-    var nomeVar = nome_input.value;
-    var emailVar = email_input.value;
-    var senhaVar = senha_input.value;
-    var champVar = champ_select.value;
 
-    // Verificando se há algum campo em branco
-    if (
-      nomeVar == "" ||
-      emailVar == "" ||
-      senhaVar == "" ||
-      champVar == "#"
-    ) {
+    function validarEmail() { 
+        var email = email_input.value;
+        var emailMin = email.toLowerCase();
 
-      alert("(Mensagem de erro para todos os campos em branco)")
+        if (emailMin.includes('@') && emailMin.endsWith('.com')) 
+        {
+            span_email.innerHTML = ` Email válido`;
+            span_email.style.color = `green`;
+            emailValido = true;
 
-      finalizarAguardar();
-      return false;
-    } else {
-      setInterval(sumirMensagem, 5000);
+        } else {
+            span_email.innerHTML = ` Email inválido`;
+            span_email.style.color = `red`;
+            emailValido = false
+        }
     }
 
-    // Enviando o valor da nova input
-    fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
-        emailServer: emailVar,
-        senhaServer: senhaVar,
-        champServer: champVar
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
+    function validarSenha() { 
+        senha = senha_input.value;
+        var veriTam = false;
+        var veriNum = false;
+        var veriCarc = false
 
-        if (resposta.ok) {
+        if (senha.length >= 8) { 
+            span_tamanho.style.color = `green`;
+            veriTam = true;
 
-          alert("Cadastro realizado com sucesso! Redirecionando para tela de Login...")
-
-          setTimeout(() => {
-            window.location = "login.html";
-          }, "2000");
-
-          limparFormulario();
-          finalizarAguardar();
         } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
+            span_tamanho.style.color = `red`;
+            veriTam = false;
         }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
+
+        if (senha.includes(0) || senha.includes(1) || senha.includes(2) || senha.includes(3) || senha.includes(4)
+            || senha.includes(5) || senha.includes(6) || senha.includes(7) || senha.includes(8) || senha.includes(9)) { 
+            span_num.style.color = `green`;
+            veriNum = true;
+
+        } else {
+            span_num.style.color = `red`;
+            veriNum = false;
+        }
+
+        if (senha.includes('!') || senha.includes('%') || senha.includes('*') || senha.includes('.')
+            || senha.includes('&') || senha.includes('#') || senha.includes('$')) { 
+            span_caracEsp.style.color = `green`;
+            veriCarc = true;
+
+        } else {
+            span_caracEsp.style.color = `red`;
+            veriCarc = false;
+        }
+
+        if (veriTam == false || veriNum == false || veriCarc == false) {
+            senhaValida = false;
+        }else {
+            senhaValida = true;
+        }
+    }
+    
+    function confirmarSenha() {
+        var senhaConfirmacao = confirmacao_senha_input.value
+
+        if (senhaConfirmacao == senha) {
+
+            span_senhaConfirm.innerHTML = ``;
+            veriSenhaConfirmacao = true;
+            
+        } else {
+
+            span_senhaConfirm.innerHTML = ` Senha incompatível`;
+            span_senhaConfirm.style.color = `red`;
+            veriSenhaConfirmacao = false;
+            
+        }
+    }
+
+    function cadastrar() {
+    
+      var nomeVar = nome_input.value;
+      var emailVar = email_input.value;
+      var senhaVar = senha_input.value;
+      var champVar = champ_select.value;
+
+      if (
+        nomeVar == "" ||
+        emailVar == "" ||
+        senhaVar == "" ||
+        champVar == "#" || 
+        emailValido == false ||
+        senhaValida == false ||
+        veriSenhaConfirmacao == false
+      ) {
+
+        alert("(Campos em branco, ou inválidos")
+
         finalizarAguardar();
-      });
+        return false;
+      } else {
+        setInterval(sumirMensagem, 5000);
+      }
 
-    return false;
-  }
+      fetch("/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
 
-  function sumirMensagem() {
-    cardErro.style.display = "none";
-  }
+          nomeServer: nomeVar,
+          emailServer: emailVar,
+          senhaServer: senhaVar,
+          champServer: champVar
+        }),
+      })
+        .then(function (resposta) {
+          console.log("resposta: ", resposta);
+
+          if (resposta.ok) {
+
+            alert("Cadastro realizado com sucesso! Redirecionando para tela de Login...")
+
+            setTimeout(() => {
+              window.location = "login.html";
+            }, "2000");
+
+            limparFormulario();
+            finalizarAguardar();
+          } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+          }
+        })
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+          finalizarAguardar();
+        });
+
+      return false;
+    }
+
+    function sumirMensagem() {
+      cardErro.style.display = "none";
+    }
 </script>
